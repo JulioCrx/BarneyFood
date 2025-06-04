@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BarneyFood</title>
+  <style>
+    /* Estilos generales */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f8f8;
+      color: #333;
+    }
+
+    .contenedor {
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #222;
+      padding: 20px;
+      color: white;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .logo span {
+      color: #f39c12;
+    }
+
+    .menu ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+
+    .menu a {
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+    }
+
+    section {
+      display: none;
+      padding: 40px 0;
+    }
+
+    section.active {
+      display: block;
+    }
+
+    /* Presentación inicio */
+    .presentacion {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .informacion h1 {
+      font-size: 2.5em;
+    }
+
+    .informacion span {
+      color: #f39c12;
+    }
+
+    .informacion--boton button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #f39c12;
+      border: none;
+      color: white;
+      font-size: 1em;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .presentacion--imagen img {
+      max-width: 100%;
+      border-radius: 10px;
+    }
+
+    /* Sub-secciones en inicio (populares y promociones) */
+    #inicio .subsecciones {
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    #inicio .subseccion {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 500px;
+    }
+
+    #inicio .subseccion h3 {
+      margin-bottom: 20px;
+      color: #f39c12;
+      text-align: center;
+    }
+
+    #inicio .subseccion .platos, 
+    #inicio .subseccion .promociones {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 15px;
+    }
+
+    #inicio .subseccion .plato, 
+    #inicio .subseccion .promo {
+      background: #f8f8f8;
+      padding: 10px;
+      border-radius: 8px;
+      text-align: center;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    #inicio .subseccion .plato:hover,
+    #inicio .subseccion .promo:hover {
+      background-color: #ffe7b3;
+    }
+
+    #inicio .subseccion img {
+      width: 100%;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 6px;
+      margin-bottom: 8px;
+    }
+
+    #inicio .subseccion button {
+      margin-top: 8px;
+      padding: 6px 10px;
+      background-color: #f39c12;
+      border: none;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    /* Menú */
+    .comida--titulo {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 2em;
+    }
+
+    .platos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 25px;
+      justify-items: center;
+    }
+
+    .plato {
+      background-color: white;
+      padding: 15px;
+      border-radius: 10px;
+      width: 100%;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      transition: transform 0.2s ease;
+    }
+
+    .plato:hover {
+      transform: translateY(-5px);
+    }
+
+    .plato img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    .plato--info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .plato--info button {
+      padding: 5px 10px;
+      background-color: #f39c12;
+      border: none;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    /* Sección Nosotros */
+    #nosotros h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #f39c12;
+    }
+
+    #nosotros p, #nosotros a {
+      text-align: center;
+      font-size: 1.1em;
+      margin-bottom: 10px;
+      color: #333;
+      text-decoration: none;
+    }
+
+    #nosotros a:hover {
+      color: #f39c12;
+    }
+
+    /* Sección Pedido */
+    #pedido {
+      max-width: 500px;
+      margin: 0 auto;
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    #pedido h2 {
+      text-align: center;
+      color: #f39c12;
+      margin-bottom: 20px;
+    }
+
+    #pedido form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    #pedido label {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    #pedido input, #pedido textarea {
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1em;
+      resize: vertical;
+    }
+
+    #pedido button {
+      padding: 12px;
+      background-color: #f39c12;
+      border: none;
+      color: white;
+      font-weight: bold;
+      font-size: 1.1em;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    #pedido button:hover {
+      background-color: #d47d08;
+    }
+  </style>
+</head>
+<body>
+  <div class="contenedor">
+    <header class="header">
+      <div class="logo">Barney<span>Food</span></div>
+      <nav class="menu">
+        <ul class="navegacion">
+          <li><a href="#" id="btnInicio">Inicio</a></li>
+          <li><a href="#" id="btnMenu">Menú</a></li>
+          <li><a href="#" id="btnNosotros">Nosotros</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- INICIO -->
+    <section id="inicio" class="active">
+      <div class="presentacion">
+        <div class="informacion">
+          <h1>Bienvenido a <span>BarneyFood</span></h1>
+          <p>Tu destino favorito para hamburguesas, pollo y papas irresistibles.</p>
+          <div class="informacion--boton">
+            <button id="btnHazPedido">Haz tu pedido</button>
+          </div>
+        </div>
+        <div class="presentacion--imagen">
+          <img src="Imagenes/presentacion.jpeg" alt="Presentación" />
+        </div>
+      </div>
+
+      <div class="subsecciones">
+
+        <div class="subseccion">
+          <h3>Platos Populares</h3>
+          <div class="platos">
+            <div class="plato" data-producto="Hamburguesa Clásica">
+              <img src="Imagenes/hamburguesa.png" alt="Hamburguesa Clásica" />
+              <p>Hamburguesa Clásica</p>
+              <button>Comprar</button>
+            </div>
+            <div class="plato" data-producto="Pollo Frito">
+              <img src="Imagenes/pollo-frito.png" alt="Pollo Frito" />
+              <p>Pollo Frito</p>
+              <button>Comprar</button>
+            </div>
+            <div class="plato" data-producto="Papas Fritas Grandes">
+              <img src="Imagenes/papas-fritas.png" alt="Papas Fritas Grandes" />
+              <p>Papas Fritas Grandes</p>
+              <button>Comprar</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="subseccion">
+          <h3>Promociones</h3>
+          <div class="promociones">
+            <div class="promo" data-producto="Combo Hamburguesa Clásica + Papas">
+              <img src="Imagenes/hamburguesa.png" alt="Combo Hamburguesa + Papas" />
+              <p>Combo Hamburguesa Clásica + Papas</p>
+              <button>Comprar</button>
+            </div>
+            <div class="promo" data-producto="2 Pollo Frito + Bebida">
+              <img src="Imagenes/pollo-frito.png" alt="Promo Pollo Frito" />
+              <p>2 Pollo Frito + Bebida</p>
+              <button>Comprar</button>
+            </div>
+            <div class="promo" data-producto="Nuggets + Papas Chicas">
+              <img src="Imagenes/nuggets.jpeg" alt="Promo Nuggets + Papas Chicas" />
+              <p>Nuggets + Papas Chicas</p>
+              <button>Comprar</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- MENÚ -->
+    <section id="menu">
+      <h2 class="comida--titulo">Nuestro Menú</h2>
+      <div class="platos">
+        <div class="plato">
+          <img src="Imagenes/hamburguesa.png" alt="Hamburguesa" />
+          <p>Hamburguesa Clásica</p>
+          <div class="plato--info">
+            <p>$80</p>
+            <button class="btnComprar" data-producto="Hamburguesa Clásica">+</button>
+          </div>
+        </div>
+
+        <div class="plato">
+          <img src="Imagenes/hamburguesa-grande.png" alt="Hamburguesa grande" />
+          <p>Hamburguesa Triple</p>
+          <div class="plato--info">
+            <p>$110</p>
+            <button class="btnComprar" data-producto="Hamburguesa Doble">+</button>
+          </div>
+        </div>
+
+        <div class="plato">
+          <img src="Imagenes/hamburguesapollo.jpeg" alt="Hamburguesa de pollo" />
+          <p>Hamburguesa de Pollo</p>
+          <div class="plato--info">
+            <p>$95</p>
+            <button class="btnComprar" data-producto="Hamburguesa de Pollo">+</button>
+          </div>
+        </div>
+
+        <div class="plato">
+          <img src="Imagenes/pollo-frito.png" alt="Pollo frito" />
+          <p>Pollo Frito</p>
+          <div class="plato--info">
+            <p>$85</p>
+            <button class="btnComprar" data-producto="Pollo Frito">+</button>
+          </div>
+        </div>
+
+        <div class="plato">
+          <img src="Imagenes/pollochico.jpeg" alt="Pollo pequeño" />
+          <p>Pollo Individual</p>
+          <div class="plato--info">
+            <p>$50</p>
+            <button class="btnComprar" data-producto="Pollo Individual">+</button>
+          </div>
+        </div>
+
+        <div class="plato">
+          <img src="Imagenes/nuggets.jpeg" alt="Nuggets" />
+          <p>Nuggets de Pollo </p>
+          <div class="plato--info">
+            <p>$75</p>
+            <button class="btnComprar" data-producto="Nuggets de Pollo">+</button>
+          </div>
+        </div>
+
+        <div class="plato">
+          <img src="Imagenes/papas-fritas.png" alt="Papas fritas" />
+          <p>Papas Fritas Grandes</p>
+          <div class="plato--info">
+            <p>$45</p>
+            <button class="btnComprar" data-producto="Papas Fritas Grandes">+</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NOSOTROS -->
+    <section id="nosotros">
+      <h2>Nosotros</h2>
+      <p>En BarneyFood nos dedicamos a preparar los mejores platillos con ingredientes frescos y mucho cariño.</p>
+      <p>Contáctanos vía WhatsApp: <a href="https://wa.me/12881023591" target="_blank">+52 1 288 102 3591</a></p>
+    </section>
+
+    <!-- PEDIDO -->
+    <section id="pedido">
+      <h2>Realiza tu pedido</h2>
+      <form id="formPedido">
+        <label for="nombre">Nombre de quien recibirá el pedido:</label>
+        <input type="text" id="nombre" name="nombre" required />
+
+        <label for="direccion">Dirección de entrega:</label>
+        <textarea id="direccion" name="direccion" rows="3" required></textarea>
+
+        <label for="telefono">Número de teléfono:</label>
+        <input type="tel" id="telefono" name="telefono" required />
+
+        <label for="producto">Producto seleccionado:</label>
+        <input type="text" id="producto" name="producto" readonly />
+
+        <button type="submit">Enviar pedido</button>
+      </form>
+    </section>
+  </div>
+
+  <script>
+    // Navegación entre secciones
+    const btnInicio = document.getElementById('btnInicio');
+    const btnMenu = document.getElementById('btnMenu');
+    const btnNosotros = document.getElementById('btnNosotros');
+    const btnHazPedido = document.getElementById('btnHazPedido');
+
+    const secciones = {
+      inicio: document.getElementById('inicio'),
+      menu: document.getElementById('menu'),
+      nosotros: document.getElementById('nosotros'),
+      pedido: document.getElementById('pedido'),
+    };
+
+    function mostrarSeccion(seccion) {
+      Object.values(secciones).forEach(sec => sec.classList.remove('active'));
+      secciones[seccion].classList.add('active');
+    }
+
+    btnInicio.addEventListener('click', e => {
+      e.preventDefault();
+      mostrarSeccion('inicio');
+    });
+
+    btnMenu.addEventListener('click', e => {
+      e.preventDefault();
+      mostrarSeccion('menu');
+    });
+
+    btnNosotros.addEventListener('click', e => {
+      e.preventDefault();
+      mostrarSeccion('nosotros');
+    });
+
+    btnHazPedido.addEventListener('click', () => {
+btnHazPedido.addEventListener('click', () => {
+  mostrarSeccion('menu');
+});
+
+    });
+
+    // Funcionalidad botones comprar en Inicio (populares y promociones)
+    document.querySelectorAll('#inicio button').forEach(boton => {
+      boton.addEventListener('click', () => {
+        const producto = boton.parentElement.getAttribute('data-producto');
+        if (producto) {
+          mostrarSeccion('pedido');
+          document.getElementById('producto').value = producto;
+        }
+      });
+    });
+
+    // Funcionalidad botones comprar en Menú
+    document.querySelectorAll('.btnComprar').forEach(boton => {
+      boton.addEventListener('click', () => {
+        const producto = boton.getAttribute('data-producto');
+        mostrarSeccion('pedido');
+        document.getElementById('producto').value = producto;
+      });
+    });
+
+    // Enviar formulario de pedido (simulado)
+    const formPedido = document.getElementById('formPedido');
+    formPedido.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const nombre = formPedido.nombre.value.trim();
+      const direccion = formPedido.direccion.value.trim();
+      const telefono = formPedido.telefono.value.trim();
+      const producto = formPedido.producto.value.trim();
+
+      if (nombre && direccion && telefono && producto) {
+        alert(`Pedido enviado:\nProducto: ${producto}\nNombre: ${nombre}\nDirección: ${direccion}\nTeléfono: ${telefono}`);
+        formPedido.reset();
+        mostrarSeccion('inicio');
+      } else {
+        alert('Por favor completa todos los campos.');
+      }
+    });
+  </script>
+</body>
+</html>
